@@ -1,0 +1,11 @@
+Guida in
+
+https://wiki.asi.unipr.it/dokuwiki/doku.php?id=guide_utente:accesso_remoto_laboratori
+
+INTRANET
+
+vdi-gw.unipr.it
+
+
+
+script in U:
