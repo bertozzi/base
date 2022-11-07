@@ -49,6 +49,7 @@ foreach($files as $file){
     $start = $start + 10;
     // creo sorgente HTML
     $destfile=$destdir."/$nomefile.php";
+    $gitdestfile=$nomefile.".".$m[2];
     shell_exec("source-highlight -fhtml -sc -n -t2 -i\"$file\" | evidenziaXXX > $destfile");
     $firstline = fgets(fopen($file, 'r'));
     if($firstline[0]=='/') // c'e' commento
@@ -65,11 +66,14 @@ foreach($files as $file){
       $start=$start+(100 - (($start)%100));
     }
     $nomefile=str_pad( $start, 4, "0", STR_PAD_LEFT )."-$m[1]";
+    $gitdestfile=$nomefile.".".$m[2];
     shell_exec("cp -v $file $tmpdir/$nomefile.$m[2]\n");
     $start = $start + 10;
     $firstline = fgets(fopen($file, 'r'));
     $html.="<tr><th colspan='2' style='padding: 20px; font-size: 150%;'>$firstline</th><tr>\n";
   }
+  if($gitdestfile != $file)
+    echo "git mv $file $gitdestfile\n";
 }
 $html.="</table>";
 
