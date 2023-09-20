@@ -35,7 +35,11 @@ sort($files);
 $start=0;
 $html=myhead();
 $html.="<table>\n";
-foreach($files as $file){
+$next_ex="";
+$prev_ex="";
+for($i = 0; $i < count($files); ++$i){
+//foreach($files as $file){
+  $file = $files[$i];
   if(!preg_match("/^[0-9]{4}-([a-z0-9]+).([cs]|txt)$/", $file, $m))
   {
     echo "$file does not match, ignoring it\n";
@@ -57,7 +61,13 @@ foreach($files as $file){
     else
       $firstline="";
 
-    $html.="<tr><td><a href=\"mostra.php?esercizio=$nomefile\">$nomefile</a></td><td style='padding-left: 20px'>$firstline</td></tr>";
+    if(preg_match("/^[0-9]{4}-([a-z0-9]+).([cs])$/", $files[$i+1], $m))
+      $next_ex = str_pad( $start, 4, "0", STR_PAD_LEFT )."-$m[1]";
+    else
+      $next_ex = "";
+
+    $html.="<tr><td><a href=\"mostra.php?esercizio=$nomefile&prev=$prev_ex&next=$next_ex\">$nomefile</a></td><td style='padding-left: 20px'>$firstline</td></tr>";
+    $prev_ex=$nomefile;
   }
   else if(preg_match("/^[0-9]{4}-([a-z0-9]+).(txt)$/", $file))  // .txt
   {
