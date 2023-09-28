@@ -9,6 +9,7 @@ if(!file_exists($destdir))
 
 // creo elenco commentato esercizi
 $listfile="$destdir/index.php";
+$regesto="$destdir/index.txt";
 $openlist=false;
 $list=fopen($listfile, "w");
 
@@ -37,6 +38,7 @@ $html=myhead();
 $html.="<table>\n";
 $next_ex="";
 $prev_ex="";
+$examples = array();
 for($i = 0; $i < count($files); ++$i){
 //foreach($files as $file){
   $file = $files[$i];
@@ -66,7 +68,9 @@ for($i = 0; $i < count($files); ++$i){
     else
       $next_ex = "";
 
-    $html.="<tr><td><a href=\"mostra.php?esercizio=$nomefile&prev=$prev_ex&next=$next_ex\">$nomefile</a></td><td style='padding-left: 20px'>$firstline</td></tr>";
+    //$html.="<tr><td><a href=\"mostra.php?esercizio=$nomefile&prev=$prev_ex&next=$next_ex\">$nomefile</a></td><td style='padding-left: 20px'>$firstline</td></tr>";
+    $html.="<tr><td><a href=\"mostra.php?esercizio=$nomefile\">$nomefile</a></td><td style='padding-left: 20px'>$firstline</td></tr>";
+    $examples[] = $nomefile."\n";
     $prev_ex=$nomefile;
   }
   else if(preg_match("/^[0-9]{4}-([a-z0-9]+).(txt)$/", $file))  // .txt
@@ -85,6 +89,10 @@ for($i = 0; $i < count($files); ++$i){
   if($gitdestfile != $file)
     echo "git mv $file $gitdestfile\n";
 }
+
+file_put_contents($regesto, $examples);
+
+
 $html.="</table>";
 
 $html.='<?php 
