@@ -49,6 +49,35 @@ $maincontent .="\n<ol>\n";
 foreach($titoli as $filename=>$titolo)
 {
   $maincontent .= " <li><a href=\"$filename.php\">$titolo</a></li>\n";
+  if (file_exists($filename) and is_dir($filename))
+  {
+    if(!file_exists($destdir.'/'.$filename))
+      mkdir($destdir.'/'.$filename);
+    $dh = opendir($filename);
+    $sorgenti = array();
+    while (($file = readdir($dh)) !== false) {
+      if(preg_match("/\.c$/", $file))
+      {
+	echo "filename: $file : filetype: " . filetype($filename . '/'. $file) . "\n";
+	$solhead = myhead($file,$file);
+	file_put_contents("$destdir/$filename/$file.php", $solhead);
+        system("source-highlight -fhtml -sc --no-doc -n -t2 -i\"$filename/$file\" >> $destdir/$filename/$file.php");
+	$solfoot = '<?php global $localpage; $localpage->pageclose(); ?>';
+	file_put_contents("$destdir/$filename/$file.php", $solhead, FILE_APPEND);
+	$sorgenti[$file] = "$filename/$file.php";
+
+      }
+    }
+    ksort($sorgenti, SORT_NATURAL);
+    $maincontent .= "  <ul>\n";
+    foreach($sorgenti as $key=>$value)
+    {
+      $maincontent .= "    <li><a href='$value'>$key</a></li>\n";
+    }
+    $maincontent .= "  </ul>";
+
+
+  }
 }
 $maincontent .="</ol>\n".
 '<?php 
@@ -79,12 +108,12 @@ function myhead($title, $descr, $keys="informatica,ingegneria,unipr,programmazio
 
 <img src="book.png" style="margin-left: 100px; float: right;">
 
-Trovate nel seguito gli esempi di codice illustrati a lezione insieme alle relative slide.
-<br>
-&Egrave; anche disponibile l\'<a href="esempi2022.tgz">archivio</a> che li contiene tutti oppure la relativa <a href="https://github.com/bertozzi/finfo">pagina GitHub</a>.
-<p>
 <a href="..">Ritorna</a> alla pagina del corso.
 <p>
+Questa pagina contiene gli esercizi proposti in laboratorio e -alcune- delle soluzioni proposte.
+<br />
+Si suggerisce di provare a risolvere gli esercizi e solo in un secondo tempo di confrontare quanto fatto con le soluzioni proposte. 
+
 
 ';
 }
@@ -99,7 +128,19 @@ function strip_ext($name,$dot="."){
 
 
 
+function delTree($dir) {
 
+  $files = array_diff(scandir($dir), array('.','..'));
+
+  foreach ($files as $file) {
+
+    (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+
+  }
+
+  return rmdir($dir);
+
+}
 
 
 
