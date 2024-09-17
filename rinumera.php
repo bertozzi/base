@@ -24,7 +24,7 @@ do{
 }while(file_exists($tmpdir));
 
 mkdir($tmpdir);
-$tmpdir.="/esempi2022";
+$tmpdir.="/esempi";
 mkdir($tmpdir);
 
 chdir("esempi"); // orig se su vuole l'altro
@@ -106,9 +106,9 @@ fclose($list);
 $here=getcwd();
 chdir($tmpdir);
 chdir("..");
-shell_exec("tar zcvf $destdir/esempi2022.tgz esempi2022");
+shell_exec("tar zcvf $destdir/esempi.tgz esempi");
 chdir($here);
-shell_exec("cp -v $destdir/esempi2022.tgz ..");
+shell_exec("cp -v $destdir/esempi.tgz ..");
 
 
 exit;
@@ -131,7 +131,7 @@ function myhead()
 
 Trovate nel seguito gli esempi di codice illustrati a lezione insieme alle relative slide.
 <br>
-&Egrave; anche disponibile l\'<a href="esempi2022.tgz">archivio</a> che li contiene tutti oppure la relativa <a href="https://github.com/bertozzi/finfo">pagina GitHub</a>.
+&Egrave; anche disponibile l\'<a href="esempi.tgz">archivio</a> che li contiene tutti oppure la relativa <a href="https://github.com/bertozzi/finfo">pagina GitHub</a>.
 <p>
 <a href="..">Ritorna</a> alla pagina del corso.
 <p>
