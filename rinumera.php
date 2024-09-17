@@ -27,7 +27,7 @@ mkdir($tmpdir);
 $tmpdir.="/esempi2022";
 mkdir($tmpdir);
 
-chdir("esempi2022"); // orig se su vuole l'altro
+chdir("esempi"); // orig se su vuole l'altro
 
 $files = array_merge(glob("*.[cs]") , glob("*.txt"));
 sort($files);
