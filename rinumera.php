@@ -1,6 +1,6 @@
 <?php
 
-$destdir="/home/httpd/main/didattica/informatica/esempi2022/";
+$destdir="/home/httpd/main/didattica/informatica/esempi/";
 if(!file_exists($destdir))
 {
   echo "Dir di destinazione non esistente, sicuro di aver montato tutte le share di rete?";
