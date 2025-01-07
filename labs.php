@@ -29,7 +29,7 @@ for($i = 0; $i < count($files); ++$i){
     continue;
   }
 
-  $nomefile = $destdir."/".strip_ext($files[$i]).".php";
+  $nomefile = $destdir."/".getexname($files[$i]).".php";
 
   $titolo = trim(str_replace("//^", "", $filecontent[0]));
   //$titoli[strip_ext($files[$i])] = $titolo;
@@ -51,19 +51,20 @@ file_put_contents($nomefile, $content);
 
 $maincontent = myhead("Esercizi di laboratorio", "Testi, soluzioni e codice degli esercizi di informatica in C proposti in laboratorio", "informatica,ingegneria,unipr,programmazione,bertozzi,codice,laboratorio,C");
 
-$maincontent .="\n<ol>\n";
+$maincontent .="\n<ul>\n";
 foreach($titoli as $filename=>$titolo)
 {
-  $maincontent .= " <li><a href=\"$filename.php\">$titolo</a></li>\n";
+  $maincontent .= " <li><a href=\"$filename.php\">[<tt>$filename</tt>] $titolo</a></li>\n";
   if (file_exists($filename) and is_dir($filename))
   {
-    if(!file_exists($destdir.'/'.$filename))
-      mkdir($destdir.'/'.$filename);
+    $wehaveinput = false;
     $dh = opendir($filename);
     $sorgenti = array();
     while (($file = readdir($dh)) !== false) {
-      if(preg_match("/\.c$/", $file))
+      if(preg_match("/\.c$/", $file) && $file != "skel.c")
       {
+	if(!file_exists($destdir.'/'.$filename))
+	  mkdir($destdir.'/'.$filename);
 	echo "filename: $file : filetype: " . filetype($filename . '/'. $file) . "\n";
 	$solhead = myhead($file,$file);
 	file_put_contents("$destdir/$filename/$file.php", $solhead);
@@ -73,9 +74,19 @@ foreach($titoli as $filename=>$titolo)
 	$sorgenti[$file] = "$filename/$file.php";
 
       }
+      elseif(!is_dir($file) && !is_executable($file)) // assumo che cio' che non ha estensione .c sia file si input
+      {
+	if(!file_exists($destdir.'/'.$filename.'-input'))
+	  mkdir($destdir.'/'.$filename.'-input');
+	echo "input file: $file : filetype: " . filetype($filename . '/'. $file) . "\n";
+	copy($filename.'/'.$file, $destdir.'/'.$filename.'-input/'.$file);
+	$wehaveinput = true;
+      }
     }
     ksort($sorgenti, SORT_NATURAL);
     $maincontent .= "  <ul>\n";
+    if($wehaveinput)
+      $maincontent .= "    <li><a href='$filename-input/'>input files</li>";
     foreach($sorgenti as $key=>$value)
     {
       $maincontent .= "    <li><a href='$value'>$key</a></li>\n";
@@ -85,7 +96,7 @@ foreach($titoli as $filename=>$titolo)
 
   }
 }
-$maincontent .="</ol>\n".
+$maincontent .="</ul>\n".
 '<?php 
 global $localpage;
 $localpage->pageclose();
