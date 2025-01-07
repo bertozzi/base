@@ -1,5 +1,10 @@
 <?php
 
+function getexname($a) // recupera prima parte filename (BASANDOSI SUL FATTO CHE SIANO 3 LETTERE)
+{
+  return $a[0].$a[1].$a[2];
+}
+
 $destdir="/home/httpd/main/didattica/informatica/labs/";
 if(!file_exists($destdir))
 {
@@ -27,7 +32,8 @@ for($i = 0; $i < count($files); ++$i){
   $nomefile = $destdir."/".strip_ext($files[$i]).".php";
 
   $titolo = trim(str_replace("//^", "", $filecontent[0]));
-  $titoli[strip_ext($files[$i])] = $titolo;
+  //$titoli[strip_ext($files[$i])] = $titolo;
+  $titoli[getexname($files[$i])] = $titolo;
   echo "Genero pagina per $titolo\n";
   $content = myhead($titolo, $titolo).'<xmp>';
   for($j=1; $j<count($filecontent); ++$j)
