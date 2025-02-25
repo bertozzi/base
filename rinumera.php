@@ -44,7 +44,7 @@ for($i = 0; $i < count($files); ++$i){
   $file = $files[$i];
   if(!preg_match("/^[0-9]{4}-([a-z0-9]+).([cs]|txt)$/", $file, $m))
   {
-    echo "$file does not match, ignoring it\n";
+    //echo "$file does not match, ignoring it\n";
     continue;
   }
   if(preg_match("/^[0-9]{4}-([a-z0-9]+).([cs])$/", $file)) // sorgente
