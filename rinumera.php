@@ -3,7 +3,7 @@
 $destdir="/home/httpd/main/didattica/informatica/esempi/";
 if(!file_exists($destdir))
 {
-  echo "Dir di destinazione non esistente, sicuro di aver montato tutte le share di rete?";
+  echo "Dir di destinazione&egrave [$destdir] non esistente, sicuro di aver montato tutte le share di rete?";
   exit;
 }
 
@@ -40,7 +40,7 @@ $next_ex="";
 $prev_ex="";
 $examples = array();
 for($i = 0; $i < count($files); ++$i){
-//foreach($files as $file){
+  //foreach($files as $file){
   $file = $files[$i];
   if(!preg_match("/^[0-9]{4}-([a-z0-9]+).([cs]|txt)$/", $file, $m))
   {
@@ -75,7 +75,7 @@ for($i = 0; $i < count($files); ++$i){
   }
   else if(preg_match("/^[0-9]{4}-([a-z0-9]+).(txt)$/", $file))  // .txt
   {
-    if($start and ($start-10))
+    if($start and ($start-10) and $start%100 )
     {
       $start=$start+(100 - (($start)%100));
     }
@@ -115,26 +115,26 @@ exit;
 
 function myhead()
 {
-   return '<?php
-     include("../header.php");
-   
-     $localpage=new kheader("Esempi di codice C");
-     $localpage->set_descr("Esempi usati durante il corso di Informatica &amp; Laboratorio di Programmazione");
-     $localpage->set_keys("informatica,ingegneria,unipr,programmazione,bertozzi,esempi,codice,lezioni");
-     $localpage->set_backlink("$myroot");
+  return '<?php
+include("../header.php");
 
-     $localpage->dump();
+$localpage=new kheader("Esempi di codice C");
+$localpage->set_descr("Esempi usati durante il corso di Informatica &amp; Laboratorio di Programmazione");
+$localpage->set_keys("informatica,ingegneria,unipr,programmazione,bertozzi,esempi,codice,lezioni");
+$localpage->set_backlink("$myroot");
 
-     ?>
+$localpage->dump();
 
-<img src="book.png" style="margin-left: 100px; float: right;">
+?>
 
-Trovate nel seguito gli esempi di codice illustrati a lezione insieme alle relative slide.
-<br>
-&Egrave; anche disponibile l\'<a href="esempi.tgz">archivio</a> che li contiene tutti oppure la relativa <a href="https://github.com/bertozzi/finfo">pagina GitHub</a>.
-<p>
-<a href="..">Ritorna</a> alla pagina del corso.
-<p>
+  <img src="book.png" style="margin-left: 100px; float: right;">
+
+  Trovate nel seguito gli esempi di codice illustrati a lezione insieme alle relative slide.
+  <br>
+  &Egrave; anche disponibile l\'<a href="esempi.tgz">archivio</a> che li contiene tutti oppure la relativa <a href="https://github.com/bertozzi/finfo">pagina GitHub</a>.
+  <p>
+  <a href="..">Ritorna</a> alla pagina del corso.
+  <p>
 
 ';
 }
