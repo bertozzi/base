@@ -1,5 +1,6 @@
 .repo
 *.swp
+*.cbp
 esempi2022
 esempi
 slides
