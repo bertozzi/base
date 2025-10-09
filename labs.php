@@ -5,14 +5,25 @@ function getexname($a) // recupera prima parte filename (BASANDOSI SUL FATTO CHE
   return $a[0].$a[1].$a[2];
 }
 
+$maindir="/home/httpd/main/didattica/informatica/";
 $destdir="/home/httpd/main/didattica/informatica/labs/";
-if(!file_exists($destdir))
+$snakedir="/home/httpd/main/didattica/informatica/snake/";
+@mkdir($destdir);
+if(!file_exists($maindir) or !file_exists($destdir))
 {
   echo "Dir di destinazione non esistente, sicuro di aver montato tutte le share di rete?";
   exit;
 }
 
 chdir("lab"); // orig se su vuole l'altro
+
+
+// copio snake
+if(!file_exists($snakedir))
+{
+  mkdir($snakedir);
+}
+copy("snake/E00-snake.pdf", $snakedir."/E00-snake.pdf");
 
 $files = glob("*.txt");
 $dirs  = glob("*",  GLOB_ONLYDIR);
