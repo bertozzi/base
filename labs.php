@@ -24,6 +24,7 @@ if(!file_exists($snakedir))
   mkdir($snakedir);
 }
 copy("snake/E00-snake.pdf", $snakedir."/E00-snake.pdf");
+copy("snake/skel.c", $snakedir."/skel.c");
 
 $files = glob("*.txt");
 $dirs  = glob("*",  GLOB_ONLYDIR);
