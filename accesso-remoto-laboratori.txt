@@ -6,6 +6,6 @@ INTRANET
 
 vdi-gw.unipr.it
 
-
-
 script in U:
+
+In linux il client è horizon-client
