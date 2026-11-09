@@ -66,7 +66,7 @@ $maincontent = myhead("Esercizi di laboratorio", "Testi, soluzioni e codice degl
 $maincontent .="\n<ul>\n";
 foreach($titoli as $filename=>$titolo)
 {
-  $maincontent .= " <li><a href=\"$filename.php\">[<tt>$filename</tt>] $titolo</a></li>\n";
+  $maincontent .= " <li><a href=\"$filename.php\">[<code>$filename</code>] $titolo</a></li>\n";
   if (file_exists($filename) and is_dir($filename))
   {
     $wehaveinput = false;
